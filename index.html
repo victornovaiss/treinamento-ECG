@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Treinamento ECG</title>
+</head>
+
+<body>
+    <h1>Treinamento ECG produtividade tóxica + Victor Novais</h1>
+    <main>
+        <img src="ECGs/Ritmo sinusal com parada sinusal.webp" alt="" id="ECG">
+        <div>
+            <p id="laudo"></p>
+            <button onclick="revelarLaudo()">Revelar resposta</button>
+            <button onclick="mostrarImagem()">Próximo &rarr;</button>
+        </div>
+    </main>
+    <script>
+
+        const imagens = [
+            "Ritmo sinusal com elevação do segmento ST.jpg",
+            "Bradicardia sinusal com infra de ST e onda T invertida.jpg",
+            "Taquicardia sinusal com depressão do segmento ST.jpg",
+            "Arritmia sinusal.jpg",
+            "Ritmo sinusal com parada sinusal.webp",
+            "BAV 1º grau com supra de ST.jpg",
+            "BAV 2° tipo I.jpg",
+            "BAV 2° grau tipo II.jpg",
+            "BAV 2p1 com QRS estreito.jpg",
+            "BAV 2p1 com QRS largo.jpg",
+            "BAV avançado.jpg",
+            "BAVt.jpg"
+        ]
+
+        let imagensRestantes = [...imagens];
+        let laudoText = ''
+        // Função para embaralhar um array (Fisher-Yates Shuffle)
+        function embaralharArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        // Função para mostrar uma imagem aleatória
+        function mostrarImagem() {
+            const elementoECG = document.getElementById("ECG");
+
+            // Verifica se ainda há imagens restantes
+            if (imagensRestantes.length === 0) {
+                // Se não houver, reinicializa a lista de imagens e embaralha
+                window.alert("Todas as imagens foram exibidas! Reiniciando a lista :D")
+                imagensRestantes = [...imagens];
+                embaralharArray(imagensRestantes);
+            }
+
+            // Seleciona uma imagem da lista de imagens restantes
+            const imagemAleatoria = imagensRestantes.pop();
+            laudoText = imagemAleatoria.replace('.jpg','')
+            // Define o caminho da imagem (ajuste o caminho conforme necessário)
+            elementoECG.src = `ECGs/${imagemAleatoria}`;
+
+            var laudo = document.getElementById('laudo')
+            laudo.innerText = ''
+
+
+        }
+
+        function revelarLaudo(){
+            var laudo = document.getElementById('laudo')
+            laudo.innerText = laudoText
+
+        }
+
+        // Opcional: mostrar uma imagem ao carregar a página
+        document.addEventListener("DOMContentLoaded", mostrarImagem);
+    </script>
+
+</body>
+</html>
